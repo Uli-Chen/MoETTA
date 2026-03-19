@@ -24,6 +24,7 @@ WANDB_BASE_URL=<YOUR WANDB SERVER URL> # If you are not using wandb-local, then 
 3. Tailor the environment configuration to yours.
 
 The base configuration is located at `config/config.py`, where the configuration related to path needed to be changed according to your environment.
+If you use CIFAR, also set `env.cifar10_data_path`, `env.cifar100_data_path`, `env.cifar10c_data_path`, and `env.cifar100c_data_path`.
 
 ## Run Experiment
 
@@ -42,6 +43,15 @@ uv run main.py base --algo.algorithm eata
 uv run main.py base --algo.algorithm moetta
 
 uv run main.py base --algo.algorithm moetta --data.corruption potpourri+
+
+# CIFAR-10-C (default corruption = gaussian_noise, severity = 5)
+uv run main.py cifar10 --env.local
+
+# CIFAR-10 clean test set
+uv run main.py cifar10 --env.local --data.corruption cifar10
+
+# CIFAR-100-C with specific corruption and severity
+uv run main.py cifar100 --env.local --data.cifar_corruption fog --data.level 3
 ```
 
 ## Add Configuration

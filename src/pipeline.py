@@ -26,7 +26,7 @@ from src.adaptation import cotta
 from src.adaptation import mgtta
 from src.adaptation import becotta
 from src.adaptation.sam import SAM
-from src.dataset.dataset import get_data, prepare_test_data
+from src.dataset.dataset import get_data, get_reference_data_name, prepare_test_data
 from src.adaptation.vpt import FOAViT
 from src.adaptation.moetta import MoETTA
 from src.adaptation.moe_normalization import switch_to_MoE
@@ -80,6 +80,7 @@ def configure_model(config: Config):
     net = net.cuda()
     net.eval()
     net.requires_grad_(False)
+    reference_data_name = get_reference_data_name(config)
 
     match config.algo.algorithm:
         case "tent":
@@ -91,7 +92,7 @@ def configure_model(config: Config):
             adapt_model = tent.Tent(net, optimizer)
         case "eata":
             # compute fisher informatrix
-            fisher_dataset = get_data("original", config)
+            fisher_dataset = get_data(reference_data_name, config)
             fisher_dataset = Subset(
                 fisher_dataset,
                 torch.randperm(len(fisher_dataset))[: config.algo.eata.fisher_size],
@@ -186,7 +187,7 @@ def configure_model(config: Config):
             adapt_model = mgtta.MGTTA(
                 net, mgg, config.algo.mgtta.lr, norm_dim=config.algo.mgtta.norm_dim
             )
-            train_set = get_data("original", config)
+            train_set = get_data(reference_data_name, config)
             train_loader = torch.utils.data.DataLoader(
                 train_set,
                 batch_size=config.train.batch_size,
