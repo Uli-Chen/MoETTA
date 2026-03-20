@@ -23,10 +23,8 @@ class EnvironmentConfig:
     adv_data_path: Path = Path("~/workspace/MoETTA/data/imagenet-a")
     corruption_data_path: Path = Path("~/workspace/MoETTA/data/imagenet-c")
     rendition_data_path: Path = Path("~/workspace/MoETTA/data/imagenet-r")
-    cifar10_data_path: Path = Path("~/workspace/MoETTA/data/cifar10")
-    cifar100_data_path: Path = Path("~/workspace/MoETTA/data/cifar100")
-    cifar10c_data_path: Path = Path("~/workspace/MoETTA/data/CIFAR-10-C")
-    cifar100c_data_path: Path = Path("~/workspace/MoETTA/data/CIFAR-100-C")
+    cifar10_data_path: Path = Path("data")
+    cifar10c_data_path: Path = Path("data/CIFAR-10-C")
 
 @dataclass
 class TrainingConfig:
@@ -58,6 +56,7 @@ class DataConfig:
     download: bool = False
     level: Literal[1, 2, 3, 4, 5] = 5  # corruption level for corrupted dataset
     cifar_corruption: Literal[
+        "all",
         "gaussian_noise",
         "shot_noise",
         "impulse_noise",
@@ -77,7 +76,7 @@ class DataConfig:
         "spatter",
         "gaussian_blur",
         "saturate",
-    ] = "gaussian_noise"
+    ] = "all"
     corruption: Literal[
         "rendition",
         "sketch",
@@ -107,9 +106,7 @@ class DataConfig:
         "potpourri",
         "potpourri+",
         "cifar10",
-        "cifar100",
         "cifar10-c",
-        "cifar100-c",
     ] = "imagenet_c_test_mix"
 
 
