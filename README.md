@@ -1,5 +1,10 @@
 # MoETTA
 
+This repository extends the original MoETTA framework by adding support for the CIFAR-10 and CIFAR-10-C datasets.
+
+- CIFAR-10: https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz  
+- CIFAR-10-C: https://zenodo.org/records/2535967/files/CIFAR-10-C.tar?download=1
+
 ## Set Up Environment
 
 1. Run following command to set up codebase and Python environment.
